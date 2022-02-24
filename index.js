@@ -9,29 +9,33 @@ const WAVE_LENGTH = 4;
 const WAVE_PERIOD = 4;
 
 function chooseColour({ x, y, width, height }) {
+  const BLUE = "#392ade";
+  const BLACK = "#262626";
+  const WHITE = "#ffffff";
+
   const wv = Math.floor(x / WAVE_LENGTH) % WAVE_PERIOD;
 
   if (y <= height / 3) {
     if (y == Math.floor(height / 3) - 1) {
-      return wv == 0 ? "black" : "blue";
+      return wv == 0 ? BLACK : BLUE;
     } else if (y == Math.floor(height / 3)) {
       const isWave = wv == 0 || wv == 1 || wv == 3;
-      return !isWave ? "blue" : "black";
+      return !isWave ? BLUE : BLACK;
     }
 
-    return "blue";
+    return BLUE;
   } else if (y <= (height / 3) * 2) {
     if (y == Math.floor(height / 3) * 2) {
-      return wv == 0 ? "white" : "black";
+      return wv == 0 ? WHITE : BLACK;
     }
 
-    return "black";
+    return BLACK;
   } else {
     if (y < Math.floor(height / 3) * 2 + 2) {
       const isWave = wv == 0 || wv == 1 || wv == 3;
-      return isWave ? "white" : "black";
+      return isWave ? WHITE : BLACK;
     }
-    return "white";
+    return WHITE;
   }
 }
 
@@ -40,18 +44,18 @@ function chooseSymbol({ x, y, width, height }) {
   if (y == 0 || y == height - 2) {
     const isWave = wv == 0;
     if (y == 0) {
-      return isWave ? "x" : " ";
+      return isWave ? "■" : " ";
     }
 
-    return !isWave ? "x" : " ";
+    return !isWave ? "■" : " ";
   } else if (y == 1 || y == height - 1) {
     const isWave = wv == 0 || wv == 1 || wv == 3;
     if (y == 1) {
-      return isWave ? "x" : " ";
+      return isWave ? "■" : " ";
     }
-    return !isWave ? "x" : " ";
+    return !isWave ? "■" : " ";
   }
-  return "x";
+  return "■";
 }
 
 function drawFlag() {
@@ -70,7 +74,7 @@ function drawFlag() {
     for (let x = 0; x < width; x++) {
       const color = chooseColour({ x, y, width, height });
       const symbol = chooseSymbol({ x, y, width, height });
-      lines[y][x] = Chalk[color](symbol);
+      lines[y][x] = Chalk.hex(color)(symbol);
     }
   }
 
